@@ -68,7 +68,7 @@ public class TP1 {
 
         } else {
             System.out.println("On continue :-)");
-            return false;
+            finJeu = false;
         }
 
         return finJeu;
