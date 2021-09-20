@@ -1,13 +1,29 @@
 package com.m2i;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class TP1 {
-    public static String[] adresses;
-    public static Map<String, Integer> fournisseurList = new HashMap<>();
+    // Exercice 1 : Part de marché
+    private static String[] adresses;
+    private static Map<String, Integer> fournisseurList = new HashMap<>();
 
+    // Exercice 2 : Générer 3 nombres aléatoires pair, pair, impair et compter le nombre d'essais
+    private static int nbEssais = 0;
+    private static int totalNbAleatoires = 3;
+    private static Boolean fin = false;
+    private static int[] randomTab = null;
+
+    // Exercice 3 : Deviner le bon nombre aleatoire au clavier
+    private static int nombreMagique;
+    private static Boolean finJeu = false;
+    private static int nombreSaisi;
+    private static Scanner scanner = new Scanner(System.in);
+
+    /**
+     * Random number generator
+     * @param numbersToGenerate
+     * @return int[] Number array between 0 and 1000
+     */
     private static int[] randGenerator(int numbersToGenerate) {
         int[] randomNumbers = new int[numbersToGenerate];
         for(int i=0; i < numbersToGenerate; i++) {
@@ -16,6 +32,11 @@ public class TP1 {
         return randomNumbers;
     }
 
+    /**
+     * Update Part Of Market for each internet provider
+     * @param e
+     * @param compteur
+     */
     private static void UpdatePartOfMarket(Map.Entry<String, Integer> e, int compteur) {
         for(int i=0; i<adresses.length; i++) {
             String fournisseurCourant = adresses[i].substring(adresses[i].indexOf('@'));
@@ -27,10 +48,35 @@ public class TP1 {
         }
     }
 
+    /**
+     * To continu the game or not ?
+     * @param finJeu
+     * @return Boolean To confirm of poursuit game or not
+     */
+    private static Boolean scanNextLine(Boolean finJeu) {
+        // Important ici:
+        // Si on utiliser un seul et même scanner pour tout le programme, penser à le réinitialiser après un nextInt() ou autre ...
+        // Sinon, dans tous les cas, on en crée un nouveau (déconseillé)
+        scanner = new Scanner(System.in);
+        System.out.println("Voulez-vous continuer y/n?");
+        String line = scanner.nextLine().toLowerCase();
+
+        if(line.equals("n")) {
+            finJeu = true;
+            System.exit(0);
+            scanner.close();
+
+        } else {
+            System.out.println("On continue :-)");
+            return false;
+        }
+
+        return finJeu;
+    }
 
     public static void main(String... args) { //String[] args
         //=============================================================================================================
-        // Exercice1 : Part de marché
+        // Exercice 1 : Part de marché
         //=============================================================================================================
 
         adresses = new String[10];
@@ -62,13 +108,8 @@ public class TP1 {
         }
 
         //=============================================================================================================
-        // Exercice2 : Générer 3 nombres aléatoires pair, pair, impair et compter le nombre d'essais
+        // Exercice 2 : Générer 3 nombres aléatoires pair, pair, impair et compter le nombre d'essais
         //=============================================================================================================
-        int totalNbAleatoires = 3;
-        int nbEssais = 0;
-        Boolean fin = false;
-
-        int[] randomTab = null;
 
         while(!fin) {
             randomTab  = randGenerator(totalNbAleatoires);
@@ -87,6 +128,50 @@ public class TP1 {
         // Exercice 3 : Trouver le bon nombre aleatoire au clavier
         //=============================================================================================================
 
-    }
+        System.out.println("===================================");
+        System.out.println("DEVINER LE NOMBRE MAGIGUE");
+        System.out.println("===================================\n");
 
+        do { // Début jeu
+            Boolean trouve = false;
+            nbEssais = 0;
+
+            nombreMagique = randGenerator(1)[0];
+            // Pour le test ... c'est de la triche :-)
+            System.out.println(String.format("Nombre magique à trouver est : %d", nombreMagique));
+
+            System.out.println("Saisir un nombre pour commencer et valider sur la touche ENTER\n");
+
+            do {
+                try {
+                    nombreSaisi = scanner.nextInt();
+                    nbEssais++;
+
+                    if(nombreSaisi < nombreMagique) {
+                        System.out.println("Plus grand ...");
+
+                    } else if(nombreSaisi > nombreMagique) {
+                        System.out.println("Plus petit ...");
+
+                    } else {
+                        trouve = true;
+                        System.out.println("Bravo !!!");
+                        System.out.println("Nombre d'essais: " + nbEssais);
+
+                        // Continue the game or not ?
+                        if (!scanNextLine(finJeu)) break;
+                    }
+
+                } catch (InputMismatchException e) {
+                    //e.printStackTrace();
+                    System.out.println("Vous n'avez pas saisi un nombre");
+
+                    // Continue the game or not ?
+                    if (!scanNextLine(finJeu)) break;
+                }
+
+            } while(!trouve);
+
+        } while (!finJeu);
+    }
 }
