@@ -1,5 +1,8 @@
 package com.m2i;
 
+import java.time.Duration;
+import java.time.LocalTime;
+import java.time.OffsetTime;
 import java.util.*;
 
 public class TP1 {
@@ -18,6 +21,10 @@ public class TP1 {
     private static Boolean finJeu = false;
     private static int nombreSaisi;
     private static Scanner scanner = new Scanner(System.in);
+
+    // Exercice 4 : temps mis par l'utilisateur pour deviner le bon nombre aleatoire généré
+    private static OffsetTime startTime;
+    private static OffsetTime endTime;
 
     /**
      * Random number generator
@@ -74,6 +81,25 @@ public class TP1 {
         return finJeu;
     }
 
+    /**
+     * Get duration in minutes between two localTime
+     * @param startTime Start OffsetTime
+     * @param endTime  End OffsetTime
+     * @return String of number hours minutes and seconds
+     */
+    private static String getDuration(OffsetTime startTime, OffsetTime endTime) {
+        //Number of seconds entre deux OffsetTime
+        long seconds = Duration.between(startTime, endTime).getSeconds();
+
+        // Instance de localtime en jour(s) exprimé(s) en secondes
+        LocalTime duree = LocalTime.ofSecondOfDay(seconds);
+
+        return String.format("%d heure(s) %d minute(s) %d seconde(s)",
+                duree.getHour(),
+                duree.getMinute(),
+                duree.getSecond());
+    }
+
     public static void main(String... args) { //String[] args
         //=============================================================================================================
         // Exercice 1 : Part de marché
@@ -126,6 +152,7 @@ public class TP1 {
 
         //=============================================================================================================
         // Exercice 3 : Trouver le bon nombre aleatoire au clavier
+        // Exercice 4 : temps mis par l'utilisateur pour deviner le bon nombre aleatoire généré
         //=============================================================================================================
 
         System.out.println("===================================");
@@ -142,8 +169,13 @@ public class TP1 {
 
             System.out.println("Saisir un nombre pour commencer et valider sur la touche ENTER\n");
 
+            // Début devinette
+            startTime = OffsetTime.now();
+
             do {
                 try {
+
+                    System.out.println("Heure de début: " + startTime + "\n"); // 2021-09-21T01:35:52.761034
                     nombreSaisi = scanner.nextInt();
                     nbEssais++;
 
@@ -154,9 +186,12 @@ public class TP1 {
                         System.out.println("Plus petit ...");
 
                     } else {
+                        endTime = OffsetTime.now();
+                        System.out.println("Heure de fin: " + endTime + "\n");
                         trouve = true;
                         System.out.println("Bravo !!!");
                         System.out.println("Nombre d'essais: " + nbEssais);
+                        System.out.println("Durée en heures : minutes : secondes => " + getDuration(startTime, endTime));
 
                         // Continue the game or not ?
                         if (!scanNextLine(finJeu)) break;
