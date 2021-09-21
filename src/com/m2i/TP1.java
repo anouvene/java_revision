@@ -82,7 +82,7 @@ public class TP1 {
     }
 
     /**
-     * Get duration in minutes between two localTime
+     * Get duration in minutes between two OffsetTime
      * @param startTime Start OffsetTime
      * @param endTime  End OffsetTime
      * @return String of number hours minutes and seconds
