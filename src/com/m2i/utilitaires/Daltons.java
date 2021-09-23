@@ -1,6 +1,6 @@
 package com.m2i.utilitaires;
 
-public enum Enumeration {
+public enum Daltons {
     JOE(1.40, 52),
     WILLIAM(1.68, 72),
     JACK(1.93, 83),
@@ -9,7 +9,7 @@ public enum Enumeration {
     private final double taille;
     private final double poids;
 
-    private Enumeration(double t, double p) {
+    private Daltons(double t, double p) {
         this.taille = t;
         this.poids = p;
     }

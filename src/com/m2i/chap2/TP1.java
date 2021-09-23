@@ -1,4 +1,4 @@
-package com.m2i;
+package com.m2i.chap2;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -174,20 +174,33 @@ public class TP1 {
 
             do {
                 try {
-
-                    System.out.println("Heure de début: " + startTime + "\n"); // 2021-09-21T01:35:52.761034
                     nombreSaisi = scanner.nextInt();
                     nbEssais++;
 
                     if(nombreSaisi < nombreMagique) {
                         System.out.println("Plus grand ...");
 
+                        // Test heure de fin essai
+                        endTime = OffsetTime.now();
+                        System.out.println("Heure de début: " + startTime); // 2021-09-21T01:35:52.761034
+                        System.out.println("Heure de fin: " + endTime);
+                        System.out.println("Durée en heures : minutes : secondes => " + getDuration(startTime, endTime));
+
                     } else if(nombreSaisi > nombreMagique) {
                         System.out.println("Plus petit ...");
 
-                    } else {
+                        // Test heure de fin essai
                         endTime = OffsetTime.now();
+                        System.out.println("Heure de début: " + startTime); // 2021-09-21T01:35:52.761034
+                        System.out.println("Heure de fin: " + endTime);
+                        System.out.println("Durée en heures : minutes : secondes => " + getDuration(startTime, endTime));
+
+                    } else {
+                        // Test heure de fin essai
+                        endTime = OffsetTime.now();
+                        System.out.println("Heure de début: " + startTime); // 2021-09-21T01:35:52.761034
                         System.out.println("Heure de fin: " + endTime + "\n");
+
                         trouve = true;
                         System.out.println("Bravo !!!");
                         System.out.println("Nombre d'essais: " + nbEssais);

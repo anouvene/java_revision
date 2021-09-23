@@ -1,6 +1,6 @@
-package com.m2i;
+package com.m2i.chap2;
 
-import com.m2i.utilitaires.Enumeration;
+import com.m2i.utilitaires.Daltons;
 
 import java.time.*;
 import java.util.Arrays;
@@ -14,17 +14,17 @@ public class Main {
         //=====================
 
         // Méthode toString
-        System.out.println("le plus petit des daltons est : " + Enumeration.JOE); // JOE
+        System.out.println("le plus petit des daltons est : " + Daltons.JOE); // JOE
 
         // Méthode valueOf, maniere plus elegante d'acceder a un element de l'enum
-        Enumeration joe = Enumeration.valueOf("JOE");
+        Daltons joe = Daltons.valueOf("JOE");
         System.out.println("\nInfos sur " + joe.toString() + " : "); // JOE
         System.out.println("- Taille : " + joe.getTaille()); // 1.4
         System.out.println("- Poids : " + joe.getPoids()); // 52.0
 
         // Méthode values, tableau contenant toutes les valeurs de l'enum
         System.out.println("\nTous les daltons :");
-        for(Enumeration d : Enumeration.values()) {
+        for(Daltons d : Daltons.values()) {
             System.out.println(d);
         }
 
