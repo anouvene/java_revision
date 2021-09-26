@@ -60,12 +60,15 @@ public class Personne {
         numero = numInstance;
     }
 
-    // @Override
-    // protected void finalize() throws Throwable
-    // {
-    //     System.out.print("\u2020");
-    //     super.finalize();
-    // }
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
 
     @Override
     public String toString() {
